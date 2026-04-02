@@ -1,11 +1,13 @@
 package ru.job4j.bmb.services;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Service;
 import ru.job4j.bmb.content.Content;
 
 /**
  * @author Maksim Merkulov
- * @version 1.1
+ * @version 1.2
  */
 @Service
 public class TelegramBotService {
@@ -15,7 +17,21 @@ public class TelegramBotService {
         this.handler = handler;
     }
 
+    @PostConstruct
+    public void init() {
+        System.out.println(
+                "TelegramBotService is going through @PostConstruct init."
+        );
+    }
+
     public void receive(Content content) {
         handler.receive(content);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        System.out.println(
+                "TelegramBotService will be destroyed via @PreDestroy."
+        );
     }
 }

@@ -1,12 +1,14 @@
 package ru.job4j.bmb.services;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import ru.job4j.bmb.repositories.AchievementRepository;
 import ru.job4j.bmb.repositories.MoodLogRepository;
 import ru.job4j.bmb.repositories.UserRepository;
 
 /**
  * @author Maksim Merkulov
- * @version 1.0
+ * @version 1.1
  */
 public class ReminderService {
     private final TelegramBotService telegramBotService;
@@ -22,5 +24,19 @@ public class ReminderService {
         this.userRepository = userRepository;
         this.moodLogRepository = moodLogRepository;
         this.achievementRepository = achievementRepository;
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println(
+                "ReminderService is going through @PostConstruct init."
+        );
+    }
+
+    @PreDestroy
+    public void destroy() {
+        System.out.println(
+                "ReminderService will be destroyed via @PreDestroy."
+        );
     }
 }
