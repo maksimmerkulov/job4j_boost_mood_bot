@@ -1,9 +1,8 @@
-package ru.job4j.service;
+package ru.job4j.bmb.services;
 
-import ru.job4j.bot.TelegramBotService;
-import ru.job4j.repository.AchievementRepository;
-import ru.job4j.repository.MoodLogRepository;
-import ru.job4j.repository.UserRepository;
+import ru.job4j.bmb.repositories.AchievementRepository;
+import ru.job4j.bmb.repositories.MoodLogRepository;
+import ru.job4j.bmb.repositories.UserRepository;
 
 /**
  * @author Maksim Merkulov

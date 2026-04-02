@@ -1,6 +1,6 @@
-package ru.job4j.service;
+package ru.job4j.bmb.services;
 
-import ru.job4j.recommendation.RecommendationEngine;
+import ru.job4j.bmb.recommendations.RecommendationEngine;
 
 /**
  * @author Maksim Merkulov
