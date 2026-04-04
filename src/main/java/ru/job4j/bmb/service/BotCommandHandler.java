@@ -1,4 +1,4 @@
-package ru.job4j.bmb.services;
+package ru.job4j.bmb.service;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -11,13 +11,7 @@ import ru.job4j.bmb.content.Content;
  * @version 1.3
  */
 @Service
-public class TelegramBotService implements BeanNameAware {
-    private final BotCommandHandler handler;
-
-    public TelegramBotService(BotCommandHandler handler) {
-        this.handler = handler;
-    }
-
+public class BotCommandHandler implements BeanNameAware {
     @Override
     public void setBeanName(String name) {
         System.out.println("Bean name is: " + name);
@@ -26,18 +20,18 @@ public class TelegramBotService implements BeanNameAware {
     @PostConstruct
     public void init() {
         System.out.println(
-                "TelegramBotService is going through @PostConstruct init."
+                "BotCommandHandler is going through @PostConstruct init."
         );
     }
 
-    public void receive(Content content) {
-        handler.receive(content);
+    void receive(Content content) {
+        System.out.println(content);
     }
 
     @PreDestroy
     public void destroy() {
         System.out.println(
-                "TelegramBotService will be destroyed via @PreDestroy."
+                "BotCommandHandler will be destroyed via @PreDestroy."
         );
     }
 }

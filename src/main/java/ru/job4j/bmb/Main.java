@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import ru.job4j.bmb.content.Content;
-import ru.job4j.bmb.services.TelegramBotService;
+import ru.job4j.bmb.service.TelegramBotService;
 
 /**
  * @author Maksim Merkulov
- * @version 1.0
+ * @version 1.1
  */
 @SpringBootApplication
 public class Main {
@@ -23,6 +23,15 @@ public class Main {
         return args -> {
             var bot = ctx.getBean(TelegramBotService.class);
             bot.receive(new Content());
+        };
+    }
+
+    @Bean
+    public CommandLineRunner checkEnv(ApplicationContext ctx) {
+        return args -> {
+            System.out.println(
+                    ctx.getEnvironment().getProperty("telegram.bot.name")
+            );
         };
     }
 }

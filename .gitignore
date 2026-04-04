@@ -18,3 +18,7 @@ target
 
 out
 *.log
+
+config/*
+
+dev/*

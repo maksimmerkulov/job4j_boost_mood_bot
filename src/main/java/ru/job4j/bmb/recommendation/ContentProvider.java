@@ -1,4 +1,4 @@
-package ru.job4j.bmb.recommendations;
+package ru.job4j.bmb.recommendation;
 
 /**
  * @author Maksim Merkulov

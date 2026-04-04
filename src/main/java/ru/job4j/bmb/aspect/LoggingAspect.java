@@ -1,4 +1,4 @@
-package ru.job4j.bmb.aspects;
+package ru.job4j.bmb.aspect;
 
 /**
  * @author Maksim Merkulov

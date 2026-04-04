@@ -1,10 +1,10 @@
-package ru.job4j.bmb.services;
+package ru.job4j.bmb.service;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.stereotype.Service;
-import ru.job4j.bmb.recommendations.RecommendationEngine;
+import ru.job4j.bmb.recommendation.RecommendationEngine;
 
 /**
  * @author Maksim Merkulov
