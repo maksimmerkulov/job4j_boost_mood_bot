@@ -2,15 +2,18 @@ package ru.job4j.bmb.services;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.stereotype.Service;
 import ru.job4j.bmb.repositories.AchievementRepository;
 import ru.job4j.bmb.repositories.MoodLogRepository;
 import ru.job4j.bmb.repositories.UserRepository;
 
 /**
  * @author Maksim Merkulov
- * @version 1.1
+ * @version 1.2
  */
-public class AchievementService {
+@Service
+public class AchievementService implements BeanNameAware {
     private final TelegramBotService telegramBotService;
     private final UserRepository userRepository;
     private final MoodLogRepository moodLogRepository;
@@ -24,6 +27,11 @@ public class AchievementService {
         this.userRepository = userRepository;
         this.moodLogRepository = moodLogRepository;
         this.achievementRepository = achievementRepository;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Bean name is: " + name);
     }
 
     @PostConstruct

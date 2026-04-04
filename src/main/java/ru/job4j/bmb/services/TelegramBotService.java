@@ -2,19 +2,25 @@ package ru.job4j.bmb.services;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.stereotype.Service;
 import ru.job4j.bmb.content.Content;
 
 /**
  * @author Maksim Merkulov
- * @version 1.2
+ * @version 1.3
  */
 @Service
-public class TelegramBotService {
+public class TelegramBotService implements BeanNameAware {
     private final BotCommandHandler handler;
 
     public TelegramBotService(BotCommandHandler handler) {
         this.handler = handler;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Bean name is: " + name);
     }
 
     @PostConstruct

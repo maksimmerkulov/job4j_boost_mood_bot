@@ -2,17 +2,25 @@ package ru.job4j.bmb.services;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.stereotype.Service;
 import ru.job4j.bmb.recommendations.RecommendationEngine;
 
 /**
  * @author Maksim Merkulov
- * @version 1.1
+ * @version 1.2
  */
-public class MoodService {
+@Service
+public class MoodService implements BeanNameAware {
     private final RecommendationEngine recommendationEngine;
 
     public MoodService(RecommendationEngine engine) {
         this.recommendationEngine = engine;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Bean name is: " + name);
     }
 
     @PostConstruct
