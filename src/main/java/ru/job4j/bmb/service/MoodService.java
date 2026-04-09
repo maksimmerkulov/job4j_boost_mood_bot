@@ -4,11 +4,10 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.stereotype.Service;
-import ru.job4j.bmb.recommendation.RecommendationEngine;
 
 /**
  * @author Maksim Merkulov
- * @version 1.2
+ * @version 1.3
  */
 @Service
 public class MoodService implements BeanNameAware {
