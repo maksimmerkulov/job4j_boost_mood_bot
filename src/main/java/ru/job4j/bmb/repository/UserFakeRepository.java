@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * @author Maksim Merkulov
- * @version 1.0
+ * @version 1.1
  */
 @Profile("test")
 @Repository
@@ -28,7 +28,8 @@ public class UserFakeRepository implements UserRepository {
         return userMap.get(clientId);
     }
 
-    public void save(User user) {
+    @Override
+    public void add(User user) {
         userMap.put(user.getClientId(), user);
     }
 }
