@@ -8,9 +8,11 @@ import java.util.List;
 
 /**
  * @author Maksim Merkulov
- * @version 1.4
+ * @version 1.5
  */
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findAll();
+
+    User findByClientId(Long clientId);
 }
