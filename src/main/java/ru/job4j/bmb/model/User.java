@@ -1,15 +1,24 @@
 package ru.job4j.bmb.model;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
 /**
  * @author Maksim Merkulov
- * @version 1.0
+ * @version 1.1
  */
+@Entity
+@Table(name = "mb_user")
 public class User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "client_id")
     private long clientId;
+
+    @Column(name = "chat_id")
     private long chatId;
 
     public User() {

@@ -22,3 +22,5 @@ out
 config/*
 
 dev/*
+
+*.mv.db
