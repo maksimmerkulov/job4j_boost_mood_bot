@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * @author Maksim Merkulov
- * @version 1.1
+ * @version 1.2
  */
 @Entity
 @Table(name = "mb_user")
@@ -15,7 +15,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_id")
+    @Column(name = "client_id", unique = true)
     private long clientId;
 
     @Column(name = "chat_id")
