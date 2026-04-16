@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * @author Maksim Merkulov
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 @Table(name = "mb_mood")
@@ -20,6 +20,11 @@ public class Mood {
     private boolean good;
 
     public Mood() {
+    }
+
+    public Mood(String text, boolean good) {
+        this.text = text;
+        this.good = good;
     }
 
     public Mood(Long id, String text, boolean good) {

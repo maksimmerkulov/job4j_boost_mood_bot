@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * @author Maksim Merkulov
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 @Table(name = "mb_award")
@@ -22,6 +22,12 @@ public class Award {
     private int days;
 
     public Award() {
+    }
+
+    public Award(String title, String description, int days) {
+        this.title = title;
+        this.description = description;
+        this.days = days;
     }
 
     public Award(Long id, String title, String description, int days) {

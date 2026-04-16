@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * @author Maksim Merkulov
- * @version 1.0
+ * @version 1.1
  */
 @Entity
 @Table(name = "mb_mood_content")
@@ -22,6 +22,11 @@ public class MoodContent {
     private String text;
 
     public MoodContent() {
+    }
+
+    public MoodContent(Mood mood, String text) {
+        this.mood = mood;
+        this.text = text;
     }
 
     public MoodContent(Long id, Mood mood, String text) {
