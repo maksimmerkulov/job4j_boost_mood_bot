@@ -17,7 +17,7 @@ import java.util.Optional;
 
 /**
  * @author Maksim Merkulov
- * @version 1.4
+ * @version 1.5
  */
 @Service
 public class MoodService {
@@ -54,26 +54,24 @@ public class MoodService {
     }
 
     public Optional<Content> awards(long chatId, Long clientId) {
-        var user = userRepository.findByClientId(clientId);
-        if (user == null) {
-            return Optional.empty();
-        }
-        var achievements = achievementRepository.findAll().stream()
-                .filter(a -> a.getUser().getId().equals(user.getId()))
-                .toList();
-        var sb = new StringBuilder("\uD83C\uDFC6 Your awards:\n");
-        if (achievements.isEmpty()) {
-            sb.append("You have no awards yet. Keep sharing your mood!");
-        } else {
-            achievements.forEach(a -> sb.append("- ")
-                    .append(a.getAward().getTitle())
-                    .append(": ")
-                    .append(a.getAward().getDescription())
-                    .append("\n"));
-        }
-        var content = new Content(chatId);
-        content.setText(sb.toString());
-        return Optional.of(content);
+        return userRepository.findByClientId(clientId).map(user -> {
+            var achievements = achievementRepository.findAll().stream()
+                    .filter(a -> a.getUser().getId().equals(user.getId()))
+                    .toList();
+            var sb = new StringBuilder("\uD83C\uDFC6 Your awards:\n");
+            if (achievements.isEmpty()) {
+                sb.append("You have no awards yet. Keep sharing your mood!");
+            } else {
+                achievements.forEach(a -> sb.append("- ")
+                        .append(a.getAward().getTitle())
+                        .append(": ")
+                        .append(a.getAward().getDescription())
+                        .append("\n"));
+            }
+            var content = new Content(chatId);
+            content.setText(sb.toString());
+            return content;
+        });
     }
 
     private Optional<Content> getMoodLogReport(
@@ -82,17 +80,15 @@ public class MoodService {
             long startPeriod,
             String title
     ) {
-        var user = userRepository.findByClientId(clientId);
-        if (user == null) {
-            return Optional.empty();
-        }
-        List<MoodLog> logs = moodLogRepository.findAll().stream()
-                .filter(l -> l.getUser().getId().equals(user.getId())
-                        && l.getCreatedAt() >= startPeriod)
-                .toList();
-        var content = new Content(chatId);
-        content.setText(formatMoodLogs(logs, title));
-        return Optional.of(content);
+        return userRepository.findByClientId(clientId).map(user -> {
+            List<MoodLog> logs = moodLogRepository.findAll().stream()
+                    .filter(l -> l.getUser().getId().equals(user.getId())
+                            && l.getCreatedAt() >= startPeriod)
+                    .toList();
+            var content = new Content(chatId);
+            content.setText(formatMoodLogs(logs, title));
+            return content;
+        });
     }
 
     private String formatMoodLogs(List<MoodLog> logs, String title) {
