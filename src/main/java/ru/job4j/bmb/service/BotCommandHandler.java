@@ -3,6 +3,7 @@ package ru.job4j.bmb.service;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.job4j.bmb.component.TgUI;
 import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.model.User;
 import ru.job4j.bmb.repository.UserRepository;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 /**
  * @author Maksim Merkulov
- * @version 1.4
+ * @version 1.5
  */
 @Service
 public class BotCommandHandler {
