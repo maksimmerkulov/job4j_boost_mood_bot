@@ -1,9 +1,11 @@
 package ru.job4j.bmb.service;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.model.MoodLog;
 import ru.job4j.bmb.model.User;
+import ru.job4j.bmb.model.UserEvent;
 import ru.job4j.bmb.repository.AchievementRepository;
 import ru.job4j.bmb.repository.MoodLogRepository;
 import ru.job4j.bmb.repository.UserRepository;
@@ -17,29 +19,33 @@ import java.util.Optional;
 
 /**
  * @author Maksim Merkulov
- * @version 1.5
+ * @version 1.6
  */
 @Service
 public class MoodService {
+    private final ApplicationEventPublisher publisher;
     private final MoodLogRepository moodLogRepository;
-    private final RecommendationEngine recommendationEngine;
     private final UserRepository userRepository;
     private final AchievementRepository achievementRepository;
+    private final RecommendationEngine recommendationEngine;
     private final DateTimeFormatter formatter = DateTimeFormatter
             .ofPattern("dd-MM-yyyy HH:mm")
             .withZone(ZoneId.systemDefault());
 
-    public MoodService(MoodLogRepository moodLogRepository,
-                       RecommendationEngine recommendationEngine,
+    public MoodService(ApplicationEventPublisher publisher,
+                       MoodLogRepository moodLogRepository,
                        UserRepository userRepository,
-                       AchievementRepository achievementRepository) {
+                       AchievementRepository achievementRepository,
+                       RecommendationEngine recommendationEngine) {
+        this.publisher = publisher;
         this.moodLogRepository = moodLogRepository;
-        this.recommendationEngine = recommendationEngine;
         this.userRepository = userRepository;
         this.achievementRepository = achievementRepository;
+        this.recommendationEngine = recommendationEngine;
     }
 
     public Content chooseMood(User user, Long moodId) {
+        publisher.publishEvent(new UserEvent(this, user));
         return recommendationEngine.recommendFor(user.getChatId(), moodId);
     }
 

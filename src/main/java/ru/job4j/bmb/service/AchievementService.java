@@ -1,50 +1,44 @@
 package ru.job4j.bmb.service;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
-import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.job4j.bmb.content.Content;
+import ru.job4j.bmb.model.User;
+import ru.job4j.bmb.model.UserEvent;
 import ru.job4j.bmb.repository.AchievementRepository;
 import ru.job4j.bmb.repository.MoodLogRepository;
-import ru.job4j.bmb.repository.UserRepository;
 
 /**
- * @author Maksim Merkulov
- * @version 1.2
+ * @author Maksim Merkulovщ
+ * @version 1.3
  */
 @Service
-public class AchievementService implements BeanNameAware {
-    private final TelegramBotService telegramBotService;
-    private final UserRepository userRepository;
+public class AchievementService implements ApplicationListener<UserEvent> {
+    private final SentContent client;
     private final MoodLogRepository moodLogRepository;
     private final AchievementRepository achievementRepository;
 
-    public AchievementService(TelegramBotService telegramBotService,
-                              UserRepository userRepository,
+    public AchievementService(SentContent client,
                               MoodLogRepository moodLogRepository,
                               AchievementRepository achievementRepository) {
-        this.telegramBotService = telegramBotService;
-        this.userRepository = userRepository;
+        this.client = client;
         this.moodLogRepository = moodLogRepository;
         this.achievementRepository = achievementRepository;
     }
 
+    @Transactional
     @Override
-    public void setBeanName(String name) {
-        System.out.println("Bean name is: " + name);
-    }
-
-    @PostConstruct
-    public void init() {
-        System.out.println(
-                "AchievementService is going through @PostConstruct init."
-        );
-    }
-
-    @PreDestroy
-    public void destroy() {
-        System.out.println(
-                "AchievementService will be destroyed via @PreDestroy."
-        );
+    public void onApplicationEvent(UserEvent event) {
+        User user = event.getUser();
+        long count = moodLogRepository.findAll().stream()
+                .filter(log -> log.getUser().getId().equals(user.getId()))
+                .count();
+        if (count == 1) {
+            Content content = new Content(user.getChatId());
+            content.setText("🏆 Поздравляем! Вы получили достижение: "
+                    + "'Первый шаг к позитиву'!");
+            client.sent(content);
+        }
     }
 }
